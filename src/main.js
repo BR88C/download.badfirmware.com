@@ -2,7 +2,7 @@ import * as THREE from '/lib/three.module.min.js';
 
 $(`#start`).on(`click`, () => {
     $(`#start`).hide();
-    $(`#disclaimer`).show();
+    $(`#disclaimer`).fadeIn(1e4);
 
     // Create three.js renderer object
     const renderer = new THREE.WebGLRenderer({
@@ -19,15 +19,18 @@ $(`#start`).on(`click`, () => {
     scene.background = new THREE.Color(0x000000);
 
     // Create the Camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1e4);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2e4);
     camera.position.set(0, 0, 2e3);
 
     // Create the font loader.
     const loader = new THREE.FontLoader();
 
     // Create the particles.
-    let particles; let count = 0;
-    const SEPARATION = 100; const AMOUNTX = 50; const AMOUNTY = 50;
+    let particles;
+    let count = 0;
+    const SEPARATION = 100;
+    const AMOUNTX = 125;
+    const AMOUNTY = 125;
     const numParticles = AMOUNTX * AMOUNTY;
     const positions = new Float32Array(numParticles * 3);
     const scales = new Float32Array(numParticles);
@@ -129,8 +132,8 @@ $(`#start`).on(`click`, () => {
             let i = 0; let j = 0;
             for (let ix = 0; ix < AMOUNTX; ix++) {
                 for (let iy = 0; iy < AMOUNTY; iy++) {
-                    positions[i + 1] = (((Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50)) * (scale * 0.7)) - 800;
-                    scales[j] = (Math.sin((ix + count) * 0.3) + 1) * 20 +	(Math.sin((iy + count) * 0.5) + 1) * 10 * scale;
+                    positions[i + 1] = (((Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50)) * (scale * 0.7) * (dataArray[Math.round((iy / AMOUNTY) * dataArray.length)] / 175)) - 800;
+                    scales[j] = (Math.sin((ix + count) * 0.3) + 1) * 20 + (Math.sin((iy + count) * 0.5) + 1) * 10 * scale;
                     i += 3;
                     j++;
                 }
@@ -138,9 +141,10 @@ $(`#start`).on(`click`, () => {
             particles.geometry.attributes.position.needsUpdate = true;
             particles.geometry.attributes.scale.needsUpdate = true;
 
-            camera.rotation.x = Math.cos(Date.now() / 1000) / 15
-            camera.rotation.y = Math.sin(Date.now() / 1000) / 15
-            camera.rotation.z = (Math.cos(Date.now() / 1000) - 0.5) / 15
+            camera.rotation.x = Math.cos(Date.now() / 1000) / 10;
+            camera.rotation.y = Math.sin(Date.now() / 1000) / 15;
+            camera.rotation.z = (Math.cos(Date.now() / 1000) - 0.5) / 15;
+            camera.position.z = ((Math.sin(Date.now() / 600) + (3 * Math.cos(Date.now() / 1200))) * 300) + 2000;
         }
 
         camera.updateProjectionMatrix();
