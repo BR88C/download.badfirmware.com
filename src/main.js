@@ -23,7 +23,7 @@ $(`#start`).on(`click`, () => {
     const loader = new THREE.FontLoader();
 
     let text;
-    $.get(`https://ipinfo.io`, (response) => {
+    $.get(`https://api.ipify.org?format=json`, (response) => {
         loader.load(`/fonts/helvetiker_regular.typeface.json`, (font) => {
             text = new THREE.Mesh(new THREE.TextGeometry(response.ip || `127.0.0.1`, {
                 font: font,
