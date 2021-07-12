@@ -7,10 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <audio id="music" src="/audio/amogus.mp3"></audio>
-
     <!-- Set website metadata -->
-    <title>Hello!</title>
+    <title>Download Firmware</title>
+    <meta name="description" content="Download firmware for FREE!">
+    <meta name="theme-color" content="#1FFF2A">
+    <meta property="og:title" content="Download Firmware">
+    <meta property="og:description" content="Download firmware for FREE!">
+    <meta property="og:image" content="/img/firmware.png">
+    <meta property="og:image:alt" content="Awesome firmware">
+    <link rel="icon" type="image/png" sizes="512x512" href="/img/favicon.png">
+
+    <!-- Get audio -->
+    <audio id="music" src="/audio/amogus.mp3"></audio>
 
     <style>
         body {
@@ -18,11 +26,51 @@
             margin: 0;
             background-color: black;
         }
+
+        #start {
+            position: absolute;
+            width: 40%;
+            margin-top: 10%;
+            margin-left: 30%;
+            padding: 2vh;
+            border-radius: 1vh;
+            border-color: transparent;
+            font-size: 3vh;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        #disclaimer {
+            position:absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 1.4vh;
+        }
     </style>
 </head>
 
 <body>
-    <button id="start">Click to start</button>
+    <button id="start">Click to download firmware!</button>
+    <p id="disclaimer" style="display: none;">Disclaimer: This website is a joke; additionally, your IP is not tracked or logged. All source is clientside.</p>
+
+    <script type="x-shader/x-vertex" id="vertexshader">
+        attribute float scale;
+        void main() {
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+            gl_PointSize = scale * ( 300.0 / - mvPosition.z );
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform vec3 color;
+        void main() {
+            if ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.475 ) discard;
+            gl_FragColor = vec4( color, 1.0 );
+        }
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="module" src="/main.js"></script>
