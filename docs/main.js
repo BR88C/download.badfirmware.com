@@ -70,9 +70,9 @@ $(`#start`).on(`click`, () => {
 
     // Create the IP text.
     let pivot;
-    $.get(`https://api.ipify.org?format=json`, (response) => {
+    $.get(`https://ipv4.wtfismyip.com/json`, (response) => {
         loader.load(`/fonts/helvetiker_regular.typeface.json`, (font) => {
-            const text = new THREE.Mesh(new THREE.TextGeometry(response.ip || `127.0.0.1`, {
+            const text = new THREE.Mesh(new THREE.TextGeometry(response.YourFuckingIPAddress || `127.0.0.1`, {
                 font: font,
                 size: 150,
                 height: 5,
